@@ -1,0 +1,101 @@
+# .pre-commit-config.yaml
+# Pre-commit hook configuration for rag-document-engine
+# Run `pre-commit install` once after cloning to activate these hooks locally.
+# Run `pre-commit run --all-files` to manually check the entire repo.
+
+repos:
+  # ---------------------------------------------------------------------
+  # Generic file hygiene checks (language-agnostic, catch dumb mistakes
+  # before they ever reach CI or a teammate's machine)
+  # ---------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=5000]
+        # Blocks accidental commits of model weights, FAISS/Chroma index
+        # dumps, or PDF corpora — the single most common way RAG repos
+        # balloon to multiple GBs and become unclonable.
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+        # Enforces LF endings even though you're on Windows, so CI (which
+        # will run on Linux) and your Windows checkout never disagree.
+      - id: detect-private-key
+        # Critical: this project will eventually hold API keys (OpenAI,
+        # HF tokens, etc.) in .env — this hook is a tripwire in case one
+        # ever gets staged by mistake.
+      - id: debug-statements
+        # Catches stray `import pdb; pdb.set_trace()` before it ships.
+
+  # ---------------------------------------------------------------------
+  # Ruff — linter + formatter (replaces flake8 + isort + black in one
+  # Rust-speed tool). This is your primary code-quality gate.
+  # ---------------------------------------------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.6
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        # Auto-fixes what it safely can (unused imports, import order,
+        # etc.) and fails the commit if anything needed a fix — forces
+        # you to review the diff rather than silently drifting.
+      - id: ruff-format
+        # Black-compatible formatter. Runs after the lint fix so
+        # formatting is always applied to already-linted code.
+
+  # ---------------------------------------------------------------------
+  # Mypy — static type checking. Non-negotiable for a "production-grade"
+  # system: your retrieval pipeline will pass tensors, embeddings, and
+  # Pydantic models between modules, and a wrong shape/type at the
+  # ingestion→embedding→vectorstore boundary is exactly the kind of bug
+  # that's cheap to catch here and expensive to debug at 2am in prod.
+  # ---------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - pydantic>=2.0
+          - types-PyYAML
+          - types-requests
+        args: [--ignore-missing-imports, --python-version=3.12]
+        exclude: ^tests/
+
+  # ---------------------------------------------------------------------
+  # uv-specific hook — keeps uv.lock honest relative to pyproject.toml.
+  # Prevents the classic "works on my machine" drift where someone
+  # edits pyproject.toml, forgets to re-lock, and CI installs a
+  # different dependency graph than the dev tested against.
+  # ---------------------------------------------------------------------
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.5.29
+    hooks:
+      - id: uv-lock
+
+# ---------------------------------------------------------------------
+# Global config
+# ---------------------------------------------------------------------
+default_language_version:
+  python: python3.12
+
+fail_fast: false
+# Run every hook even if one fails, so a single `git commit` attempt
+# shows you the FULL list of problems instead of stopping at the first.
+
+exclude: |
+  (?x)^(
+      \.venv/|
+      data/|
+      models/|
+      \.cache/|
+      \.git/
+  )
