@@ -51,16 +51,12 @@ dev = [
   "pytest-asyncio>=0.23.7,<1.0.0",
   "pytest-cov>=5.0.0,<6.0.0",
   "pytest-mock>=3.14.0,<4.0.0",
-
   # Code quality — ruff replaces flake8 + isort + pyupgrade
   "ruff>=0.4.8,<1.0.0",
-
   # Type checking
   "mypy>=1.10.0,<2.0.0",
-
   # Pre-commit hook manager
   "pre-commit>=3.7.1,<4.0.0",
-
   # Better test output
   "rich>=13.7.1,<14.0.0",
 ]
