@@ -12,7 +12,7 @@ from __future__ import annotations
 from enum import Enum
 from pathlib import Path
 
-from pydantic import Field, field_validator
+from pydantic import Field, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -81,7 +81,7 @@ class Settings(BaseSettings):
 
     @field_validator("chunk_overlap")
     @classmethod
-    def overlap_must_be_smaller_than_chunk(cls, v: int, info) -> int:
+    def overlap_must_be_smaller_than_chunk(cls, v: int, info: ValidationInfo) -> int:
         chunk_size = info.data.get("chunk_size")
         if chunk_size is not None and v >= chunk_size:
             raise ValueError(
