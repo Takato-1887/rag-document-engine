@@ -9,6 +9,3 @@ if __name__ == "__main__":
     print("Config loaded successfully:\n")
     for key, value in settings.model_dump().items():
         print(f"  {key}: {value}")
-
-
-
