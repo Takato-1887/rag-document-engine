@@ -1,0 +1,46 @@
+# .github/workflows/ci.yml
+# Continuous Integration: runs on every push and pull request to main.
+# Mirrors the same checks as local pre-commit (lint, format, type-check)
+# plus the test suite, so nothing broken can merge into main.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Lint, Type-Check, Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.11.24"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run ruff (lint)
+        run: uv run ruff check .
+
+      - name: Run ruff (format check)
+        run: uv run ruff format --check .
+
+      - name: Run mypy
+        run: uv run mypy src/ --ignore-missing-imports
+
+      - name: Run tests
+        run: uv run pytest tests/ -v
