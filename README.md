@@ -35,3 +35,10 @@ User Query → Hybrid Search (dense + sparse) → Re-Ranking → LLM → Answer
 | Deployment | Docker |
 | CI/CD | GitHub Actions |
 | Code quality | Ruff, mypy, pre-commit |
+
+## Getting Started
+
+### Prerequisites
+- Python 3.12
+- [uv](https://docs.astral.sh/uv/) package manager
+- (Optional but recommended) NVIDIA GPU with CUDA support for embedding acceleration
