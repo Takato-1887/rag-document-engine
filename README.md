@@ -11,3 +11,27 @@
 Most RAG tutorials stop at "load a PDF, embed it, ask a question." This project goes further: it's built the way a production system actually needs to be — typed, tested, CI-gated, containerized, and evaluated against real retrieval-quality metrics (RAGAS), not just vibes.
 
 Everything runs **locally** on consumer hardware (developed on an RTX 5050 8GB laptop GPU) — no OpenAI API key required, though cloud LLM providers are supported as an option.
+
+## Architecture
+Documents → Ingestion → Chunking → Embedding (GPU) → Vector Store
+↓
+User Query → Hybrid Search (dense + sparse) → Re-Ranking → LLM → Answer
+
+*(Full architecture diagram coming as the pipeline is built out — see Project Status below.)*
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Language | Python 3.12 |
+| Package management | uv |
+| Embeddings | sentence-transformers (GPU/CUDA) |
+| Vector store | *(TBD — Phase 5)* |
+| LLM serving | Ollama (local) / OpenAI / Anthropic (optional) |
+| API | FastAPI |
+| Frontend | Gradio |
+| Evaluation | RAGAS |
+| Experiment tracking | MLflow |
+| Deployment | Docker |
+| CI/CD | GitHub Actions |
+| Code quality | Ruff, mypy, pre-commit |
