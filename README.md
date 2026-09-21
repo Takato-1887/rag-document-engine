@@ -1,4 +1,4 @@
-# Private Document Intelligence Engine
+ # Private Document Intelligence Engine
 
 ![CI](https://github.com/Takato-1887/rag-document-engine/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.12-blue)
@@ -35,6 +35,15 @@ User Query → Hybrid Search (dense + sparse) → Re-Ranking → LLM → Answer
 | Deployment | Docker |
 | CI/CD | GitHub Actions |
 | Code quality | Ruff, mypy, pre-commit |
+
+## Getting Started
+
+### Prerequisites
+- Python 3.12
+- [uv](https://docs.astral.sh/uv/) package manager
+- (Optional but recommended) NVIDIA GPU with CUDA support for embedding acceleration
+
+
 
 ## Getting Started
 
