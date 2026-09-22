@@ -49,5 +49,20 @@ User Query → Hybrid Search (dense + sparse) → Re-Ranking → LLM → Answer
 
 ### Prerequisites
 - Python 3.12
+
+### Setup
+
+```bash
+git clone https://github.com/Takato-1887/rag-document-engine.git
+cd rag-document-engine
+
+# Install dependencies and pre-commit hooks
+uv tool install rust-just   # one-time, if you don't have `just`
+just install
+
+# Copy environment template and fill in your values
+cp .env.example .env
+```
+
 - [uv](https://docs.astral.sh/uv/) package manager
 - (Optional but recommended) NVIDIA GPU with CUDA support for embedding acceleration
