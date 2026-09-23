@@ -65,4 +65,12 @@ just install
 # Copy environment template and fill in your values
 cp .env.example .env
 ```
+### Common commands
+
+```bash
+just check         # run all quality checks (lint, format, types, tests) — mirrors CI
+just test          # run test suite
+just lint-fix       # auto-fix lint issues
+just verify-config  # sanity-check your .env loads correctly
+```
 
