@@ -78,6 +78,24 @@ See the `justfile` for the full command list, or run `just` with no arguments.
 ## Project Status
 
 Currently in active development, following a 20-phase build roadmap.
-
-
+- [x] **Phase 0** — Environment Setup & Development Workflow
+- [ ] **Phase 1** — Project Architecture & Repository Structure
+- [ ] **Phase 2** — Document Ingestion Pipeline
+- [ ] **Phase 3** — Text Cleaning & Semantic Chunking
+- [ ] **Phase 4** — Embedding Models
+- [ ] **Phase 5** — Vector Database
+- [ ] **Phase 6** — Retrieval Pipeline
+- [ ] **Phase 7** — Hybrid Search
+- [ ] **Phase 8** — Re-Ranking
+- [ ] **Phase 9** — Local LLM Integration
+- [ ] **Phase 10** — RAG Pipeline
+- [ ] **Phase 11** — FastAPI Backend
+- [ ] **Phase 12** — Gradio Frontend
+- [ ] **Phase 13** — Evaluation with RAGAS
+- [ ] **Phase 14** — MLflow Experiment Tracking
+- [ ] **Phase 15** — Docker Deployment
+- [ ] **Phase 16** — Monitoring & Logging
+- [ ] **Phase 17** — Performance Optimization
+- [ ] **Phase 18** — Production Hardening
+- [ ] **Phase 19** — GitHub Documentation & Portfolio Polish
 
