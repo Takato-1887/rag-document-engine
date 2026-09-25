@@ -73,4 +73,11 @@ just test          # run test suite
 just lint-fix       # auto-fix lint issues
 just verify-config  # sanity-check your .env loads correctly
 ```
+See the `justfile` for the full command list, or run `just` with no arguments.
+
+## Project Status
+
+Currently in active development, following a 20-phase build roadmap.
+
+
 
